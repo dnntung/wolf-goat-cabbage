@@ -2,6 +2,20 @@ let state = ''
 let moveTo = ''
 let results =[]
 
+
+let move = (who='', direction) => { 
+     if (who !== ''){ 
+          $(`.${direction}-side`).find(`div.${who}`).find('img').show()
+          $(`.${direction}-side`).find(`button.${who}`).prop("disabled", false)
+
+          $(`.${direction==="left"?"right":"left"}-side`).find(`div.${who}`).find('img').hide()
+          $(`.${direction==="left"?"right":"left"}-side`).find(`button.${who}`).prop("disabled", true)
+     }
+
+     $(`.man > .${direction}-side > div`).show()
+     $(`.man > .${direction==="left"?"right":"left"}-side > div`).hide()
+}
+
 let isCompleted = async (state) => { 
      result = await fetch('/is-completed/'+state)
                     .then((respone) => respone.text())
@@ -73,7 +87,6 @@ $("#hint").click(async () => {
      }
 
      $('#log').prop('scrollTop', $("#log").prop("scrollHeight"))
-     
 })
 
 let leftSideActivate = async () => { 
@@ -95,14 +108,14 @@ let rightSideActivate = async () => {
      $(".man > .left-side > div").hide()
 }
 
-let completeGamePlay = async () => {
+let completeGamePlay = async (cpu = false) => {
      $(".selection.right-side").hide()
      $(".selection.left-side").hide()
      $(".man > .left-side > div > .selection").hide()
      $(".man > .right-side > div > .selection").hide()
      $("#hint").prop("disabled", true)
 
-     $("#log").append(`<li class="list-group-item list-group-item-success">Bạn đã hoàn thành công việc!</li>`)
+     $("#log").append(`<li class="list-group-item list-group-item-success">${cpu?"Máy":"Bạn"} đã hoàn thành công việc!</li>`)
 }
 
 let deactivateGamePlay = async () => { 
@@ -151,6 +164,75 @@ $("#playerAttempt").click(async () => {
 
      $("#log").append(`<li class="list-group-item list-group-item-primary">TRÒ CHƠI BẮT ĐẦU</li>`)
      $('#log').prop('scrollTop', $("#log").prop("scrollHeight"))
+})
+
+$("#CPUAttempt").click(async () => { 
+     await initGamePlay()
+
+     $(".selection.right-side").hide()
+     $(".selection.left-side").hide()
+     $(".man > .left-side > div > .selection").hide()
+     $(".man > .right-side > div > .selection").hide()
+     $("#hint").prop("disabled", true)
+
+     $("#log").append(`<li class="list-group-item list-group-item-primary">TRÒ CHƠI BẮT ĐẦU</li>`)
+
+     results = [] 
+     await getSolution()
+
+     let jsHello = (x,j) => {
+          if (x >= j-2) return;
+          setTimeout(async () => {
+               let who = ''
+               let direction = ''
+               let result = results[x]
+
+               const entities = ["Người", "Dê", "Sói", "Bắp cải"]
+               let content = ''
+               if (result.charAt(0) != state.charAt(0)){ 
+                    content += `Máy chọn`
+               }
+               for (i=1; i<4; i++){ 
+                    if (result.charAt(i) != state.charAt(i)){ 
+                         content += " chở " + `<strong>${entities[i]}</strong>`
+                         if (i==1){ 
+                              who = "goat"
+                         }
+                         else if (i==2){ 
+                              who = 'wolf'
+                         }
+                         else if (i==3){ 
+                              who = 'cabbage'
+                         }
+                         break
+                    }
+               }
+               if (content != ''){ 
+                    if (result.charAt(0) === '1'){ 
+                         content += " qua bờ sông bên <strong>trái</strong>."
+                         direction = 'left'
+                    }
+                    else{ 
+                         content += " qua bờ sông bên <strong>phải</strong>."
+                         direction = 'right'
+                    }
+               }
+               await move(who, direction)
+               $("#log").append(`<li class="list-group-item list-group-item-secondary">${content}</li>`)
+               $('#log').prop('scrollTop', $("#log").prop("scrollHeight"))
+
+               state = result
+
+               if (await isCompleted(state)){ 
+                    await completeGamePlay(cpu = true)
+               }
+               jsHello(++x);
+
+          }, 1000);
+          
+      }
+
+     jsHello(1, results.length)     
 })
 
 //Move farmer alone
