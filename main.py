@@ -84,6 +84,12 @@ class WGC:
           return result
 
 
-c = WGC([int(i) for i in sys.argv[1].split(',')])
-print(c.findSolution())
+#c = WGC([int(i) for i in sys.argv[1].split(',')])
+
+c = WGC([1,1,1,1])
+result = []
+for i in c.findSolution(): 
+     result.append(''.join([str(j) for j in i]))
+
+print(','.join(result))
 

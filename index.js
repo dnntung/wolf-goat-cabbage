@@ -1,8 +1,13 @@
 const express = require('express')
 const app = express()
 const {PythonShell} =require('python-shell');
+app.use(express.static( "assets" ))
+app.set('view engine','ejs')
+app.get("/", (req, res) =>{
+     res.render('index')
+})
 
-app.get("/", (req, res)=>{
+app.get("/autoPlay", (req, res)=>{
      //Here are the option object in which arguments can be passed for the python_test.js.
      let options = {
           mode: 'text',
@@ -19,7 +24,7 @@ app.get("/", (req, res)=>{
            console.log('result: ', result.toString());
            res.send(result.toString())
      });
- });
+});
 
 let port = process.env.PORT || 3000
 
