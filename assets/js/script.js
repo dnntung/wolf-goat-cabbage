@@ -338,7 +338,6 @@ $("button.wolf").click(async (e) => {
 
      //Move the wolf
      state = state.substr(0, 2) + moveTo + state.substr(2 + moveTo.length)
-     console.log(state)
 
      $("#log").append(`<li class="list-group-item">Bạn chọn chở <strong>Sói</strong> qua bờ sông bên <strong>${moveTo==='1'?'trái':'phải'}</strong></li>`)
 
@@ -382,7 +381,6 @@ $("button.cabbage").click(async (e) => {
 
      //Move the cabbage
      state = state.substr(0, 3) + moveTo + state.substr(3 + moveTo.length)
-     console.log(state)
 
      $("#log").append(`<li class="list-group-item">Bạn chọn chở <strong>Bắp cải</strong> qua bờ sông bên <strong>${moveTo==='1'?'trái':'phải'}</strong></li>`)
 
