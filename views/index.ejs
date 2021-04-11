@@ -13,17 +13,17 @@
 <body>
      <div class="container">
           <div class="row py-3 ">
-               <div class="col-9 p-0">
-                    <h3>Trò chơi người lái đò</h3>
+               <div class="col-10 p-0">
+                    <h1>Bài toán người lái đò</h1>
                </div>
-               <div class="col-3 p-0">
+               <div class="col-2 p-0">
                     <button class="btn btn-primary w-100 h-100">Luật chơi</button>
                </div>
           </div>
           
-          <div class="row my-3 px-3 rounded border-primary border" style="height: fit-content;">
+          <div class="row my-3 px-3 rounded border-muted border" style="height: fit-content;">
                <div class="col-3 position-relative">
-                    <div class="selection btn-group w-100 left-side" role="group" aria-label="Basic mixed styles example">
+                    <div class="selection btn-group w-100 left-side"style="display: none" role="group" aria-label="Basic mixed styles example">
                          <button type="button" class="goat btn btn-danger">Dê</button>
                          <button type="button" class="wolf btn btn-warning">Sói</button>
                          <button type="button" class="cabbage btn btn-success">Bắp cải</button>
@@ -46,16 +46,16 @@
                     <img class="w-100" src="/images/river.png" alt="river">
                     <div class="row position-absolute man h-100 w-100">
                          <div class="col-3 left-side h-100">
-                              <div class="position-relative h-100 ">
-                                   <div class="selection btn-group w-100" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="skip btn btn-secondary">Bỏ qua</button>
+                              <div class="position-relative h-100">
+                                   <div class="selection btn-group w-100" style="display:none" role="group" aria-label="Basic mixed styles example">
+                                        <button type="button" class="skip btn btn-secondary" >Bỏ qua</button>
                                    </div>
                                    <img class="w-100 position-absolute" src="/images/man.png" alt="man">
                               </div>
                          </div>
                          <div class="col-6"></div>
                          <div class="col-3 right-side h-100">
-                              <div class="position-relative h-100">
+                              <div class="position-relative h-100" style="display:none">
                                    <div class="selection btn-group w-100" role="group" aria-label="Basic mixed styles example">
                                         <button type="button" class="skip btn btn-secondary">Bỏ qua</button>
                                    </div>
@@ -65,161 +65,48 @@
                     </div>
                </div>
                <div class="col-3 position-relative">
-                    <div class="selection btn-group w-100 right-side" role="group" aria-label="Basic mixed styles example">
+                    <div class="selection btn-group w-100 right-side" style="display:none" role="group" aria-label="Basic mixed styles example">
                          <button type="button" class="goat btn btn-danger" >Dê</button>
                          <button type="button" class="wolf btn btn-warning" >Sói</button>
                          <button type="button" class="cabbage btn btn-success" >Bắp cải</button>
                     </div>
                     <div class="who row justify-content-md-center w-100 right-side">
                          <div class="col goat">
-                              <img class="w-100" src="/images/goat.png" alt="goat">
+                              <img class="w-100" src="/images/goat.png" alt="goat" style="display:none">
                          </div>
                          <div class="col wolf">
-                              <img class=" w-100" src="/images/wolf.png" alt="wolf">
+                              <img class=" w-100" src="/images/wolf.png" alt="wolf" style="display:none">
                          </div>
                          <div class="col cabbage">
-                              <img class=" w-100" src="/images/cabbage.png" alt="cabbage">
+                              <img class=" w-100" src="/images/cabbage.png" alt="cabbage" style="display:none">
                          </div>
                     </div>
                     <img id="right" class="position-absolute land" src="/images/land.png" alt="right-land">
                </div>
           </div>
 
-          <div class="container text-center">
-                    <div class=" btn-group btn-group-lg">
-                         <a href="#" id="playerAttempt" class="btn btn-primary" aria-current="page">Chơi</a>
-                         <a href="#" id="CPUAttempt" class="btn btn-secondary">Tự chơi</a>
+          <div class="row ">
+               <ul id="log" class="list-group px-0 overflow-auto rounded border-muted border" style="min-height: 300px;">
+                    
+               </ul>
+          </div>
+
+          <div class="row py-3 ">
+               
+               <div class="d-flex justify-content-between px-0">
+                    <button id="hint" class="btn btn-warning btn-lg" disabled>Cần trợ giúp?</button>
+                    <div class=" btn-group ">
+                         <a href="#" id="playerAttempt" class="btn btn-primary btn-lg" aria-current="page">Chơi</a>
+                         <a href="#" id="CPUAttempt" class="btn btn-secondary btn-lg">Tự chơi</a>
                     </div>
                </div>
           </div>
+
+          
+
+          
+          
      </div>
-     <script>
-          let state = 'llll'
-          let leftSideActivate = async () => { 
-               $(".selection.left-side").show()
-               $(".man > .left-side > div").show()
-
-               $(".selection.right-side").hide()
-               $(".man > .right-side > div").hide()
-               
-          }
-
-          let rightSideActivate = async () => { 
-               $(".selection.right-side").show()
-               $(".man > .right-side > div").show()
-
-               $(".selection.left-side").hide()
-               $(".man > .left-side > div").hide()
-          }
-
-          let initGamePlay = async () => { 
-               await leftSideActivate()
-
-               $(".who.left-side").children("div.col").each((index, e) => { 
-                    $(e).find("img").show();
-               })
-               $(".who.right-side").children("div.col").each((index, e) => { 
-                    $(e).find("img").hide();
-               })
-
-               $(".right-side.selection > button").each((index, e) => {
-                    $(e).prop("disabled", true)
-               })
-          }
-
-          $("#playerAttempt").click(async () => { 
-               await initGamePlay()
-
-               console.log("GAME START!")
-          })
-
-          $("button.skip").click(async (e) => { 
-               if ($(e.target).parent().parent().parent().hasClass("left-side")){
-                    //console.log("You skipped the left side!")
-
-                    await rightSideActivate()
-               }
-               else{
-                    //console.log("You skipped the right side!")
-
-                    await leftSideActivate()
-               }
-          })
-
-          $("button.goat").click(async (e) => {
-               if ($(e.target).parent().hasClass("left-side")){ 
-                    //console.log("You choose the left goat!")
-
-                    $(".left-side").find('div.goat').find('img').hide()
-                    $(".left-side").find('button.goat').prop("disabled", true)
-
-                    $(".right-side").find('div.goat').find('img').show()
-                    $(".right-side").find('button.goat').prop("disabled", false)
-
-                    await rightSideActivate()
-               }
-               else{ 
-                    //console.log("You choose the right goat!")
-
-                    $(".right-side").find('div.goat').find('img').hide()
-                    $(".right-side").find('button.goat').prop("disabled", true)
-
-                    $(".left-side").find('div.goat').find('img').show()
-                    $(".left-side").find('button.goat').prop("disabled", false)
-
-                    await leftSideActivate()
-               }
-               
-          })
-          $("button.wolf").click(async (e) => {
-               if ($(e.target).parent().hasClass("left-side")){ 
-                    //console.log("You choose the left wolf!")
-
-                    $(".left-side").find('div.wolf').find('img').hide()
-                    $(".left-side").find('button.wolf').prop("disabled", true)
-
-                    $(".right-side").find('div.wolf').find('img').show()
-                    $(".right-side").find('button.wolf').prop("disabled", false)
-
-                    await rightSideActivate()
-               }
-               else{ 
-                    //console.log("You choose the right wolf!")
-
-                    $(".right-side").find('div.wolf').find('img').hide()
-                    $(".right-side").find('button.wolf').prop("disabled", true)
-
-                    $(".left-side").find('div.wolf').find('img').show()
-                    $(".left-side").find('button.wolf').prop("disabled", false)
-
-                    await leftSideActivate()
-               }
-          })
-
-          $("button.cabbage").click(async (e) => {
-               if ($(e.target).parent().hasClass("left-side")){ 
-                    //console.log("You choose the left cabbage!")
-
-                    $(".left-side").find('div.cabbage').find('img').hide()
-                    $(".left-side").find('button.cabbage').prop("disabled", true)
-
-                    $(".right-side").find('div.cabbage').find('img').show()
-                    $(".right-side").find('button.cabbage').prop("disabled", false)
-
-                    await rightSideActivate()
-               }
-               else{ 
-                    //console.log("You choose the right cabbage!")
-
-                    $(".right-side").find('div.cabbage').find('img').hide()
-                    $(".right-side").find('button.cabbage').prop("disabled", true)
-
-                    $(".left-side").find('div.cabbage').find('img').show()
-                    $(".left-side").find('button.cabbage').prop("disabled", false)
-
-                    await leftSideActivate()
-               }
-          })
-     </script>
+     <script src="/js/script.js"></script>
 </body>
 </html>

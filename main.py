@@ -3,7 +3,7 @@ import sys
 class WGC: 
      entities = ['man', 'goat', 'wolf', 'cabbage']
 
-     def __init__(self, initialState): 
+     def __init__(self, initialState=[]): 
           self.initialState = [i for i in initialState]
 
      # Returns the state of the symbol who in the dictionary al. It
@@ -70,6 +70,10 @@ class WGC:
 
      # Searches for a solution from the initial state
      def findSolution(self):
+          if not self.isSafe(self.initialState):
+               return -1
+          if self.isCompleted(self.initialState):
+               return -1
           result = [self.initialState]
           nextStage = self.initialState[::]
 
@@ -83,13 +87,23 @@ class WGC:
                          break
           return result
 
+def findSolution(state):
+     c = WGC([int(i) for i in state])
+     result = []
+     if not c.findSolution() == -1:
+          for i in c.findSolution(): 
+               result.append(''.join([str(j) for j in i]))
 
-#c = WGC([int(i) for i in sys.argv[1].split(',')])
+          return (','.join(result))
+     return -1
 
-c = WGC([1,1,1,1])
-result = []
-for i in c.findSolution(): 
-     result.append(''.join([str(j) for j in i]))
+def isSafe(state):
+     c = WGC()
+     return c.isSafe([int(i) for i in state])
 
-print(','.join(result))
+def isCompleted(state):
+     c = WGC()
+     return c.isCompleted([int(i) for i in state])
 
+if __name__ == '__main__':
+     print(globals()[sys.argv[2]](sys.argv[1]))

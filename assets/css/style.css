@@ -23,12 +23,6 @@
      z-index: 3;
 }
 
-.goat > img, 
-.wolf > img, 
-.cabbage > img{ 
-     display: none
-}
-
 .man{ 
      bottom: 0
 }
