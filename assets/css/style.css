@@ -1,0 +1,39 @@
+.land{ 
+     bottom: 0;
+     z-index: 0;
+     width: 105%;
+}
+#left{ 
+     left: 5px
+}
+#right{ 
+     left: -10px
+}
+#river > img{ 
+     z-index: -1;
+}
+.who{ 
+     z-index: 2;
+     position: absolute;
+     bottom: 40px;
+     left: 0px
+}
+.selection{ 
+     top: 30px;
+     z-index: 3;
+}
+
+.man{ 
+     bottom: 0
+}
+.man > .left-side > div > img, 
+.man > .right-side > div > img{ 
+     bottom: -10px;
+     left: 0
+}
+.land{ 
+     z-index: 1;
+}
+.row{ 
+     margin-left: 0 !important;
+}

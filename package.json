@@ -19,6 +19,11 @@
   },
   "homepage": "https://github.com/doodleragon/wolf-goat-cabbage#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "python-shell": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
